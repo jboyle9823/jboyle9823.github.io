@@ -1,91 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="author" content="Jonathan Boyle">
-	<title>Jonathan Boyle | My Art</title>
-	<style>
-		header {
-			text-align: center;
-			background-color: palevioletred;
-			font-size: 25px;
-		}
-		h2 {
-			text-align: center;
-			font-family: 'Times New Roman', serif;
-			font-weight: bold;
-			margin-bottom: 100px;
-		}
-		.paragraph {
-			text-align: center;
-		}
-		body {
-			background-image: url('images/FishIm.png');
-      		background-repeat: no-repeat;
-      		background-size: 550px 550px;
-			background-attachment: fixed;
-      		background-position: center;
-		}
-
-		.keywords {
-			font-family: "Courier New", monospace;
-			margin: 55px;
-			position: relative;
-			font-weight: bold;
-		}
-		
-		#kOne {
-			font-size: 44px;
-			color: darkblue;
-			left: 30%;
-		}
-		#kTwo {
-			font-size: 48px;
-			color: darkcyan;
-			transform: rotate(-5deg);
-			left: 50%;
-		}
-		#kThree {
-			font-size: 40px;
-			color: darkgoldenrod;
-			left: 20%;
-		}
-		#kFour {
-			font-size: 52px;
-			color: darkred;
-			font-style: italic;
-			left: 40%;
-		}
-		#kFive {
-			font-size: 45px;
-			color: darkorchid;
-			text-decoration: underline;
-			left: 60%;
-			margin-bottom: 90px;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <meta name="author" content="Jonathan Boyle">
+  <title>Jonathan Boyle | My Art</title>
+  <link rel="stylesheet" href="my_style.css">
 </head>
-<body>
-	<header>
-    	<h1>
-			FISH, By Jonathan Boyle
-		</h1>
-  	</header>
+<body class="art">
+	<div class = "body_wrapper">
+		<nav>
+			<h3>Navigation:</h3>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="my_vacation.html">My Dream Vacation</a></li>
+				<li><a href="my_artistic_self.html" class="current">My Art</a></li>
+			</ul>
+		</nav>
+		<header>
+    		<h1>
+				FISH, By Jonathan Boyle
+			</h1>
+  		</header>
 
-	<h2>B.O.Y.L.E:</h2>
-	<p class="keywords" id="kOne">Brave</p>
-	<p class="keywords" id="kTwo">Optimistic</p>
-	<p class="keywords" id="kThree">Youthful</p>
-	<p class="keywords" id="kFour">Loyal</p>
-	<p class="keywords" id="kFive">Energetic</p>
+		<h2 class = "boyle">B.O.Y.L.E:</h2>
+		<p class="keywords" id="kOne">Brave</p>
+		<p class="keywords" id="kTwo">Optimistic</p>
+		<p class="keywords" id="kThree">Youthful</p>
+		<p class="keywords" id="kFour">Loyal</p>
+		<p class="keywords" id="kFive">Energetic</p>
 
-	<p class = "paragraph">
-		The words on screen represent the acronym B.O.Y.L.E, and can be used to describe Jonathan Boyle.<br>
-		The image on screen is the logo for the App Fishtagram, created by Jonathan Boyle &amp talented collaborators.
-	</p>
-
-	<hr>
-	
-	<a href="index.html">Back home</a>
+		<p class = "paragraph">
+			The words on screen represent the acronym B.O.Y.L.E, and can be used to describe Jonathan Boyle.<br>
+			The image on screen is the logo for the App Fishtagram, created by Jonathan Boyle &amp talented collaborators.
+		</p>
+	</div>
+	<footer>
+		This website is made for CS203 labs!
+	</footer>
 </body>
 </html>
