@@ -1,0 +1,157 @@
+html, body {
+  font-family: 'Times New Roman', Times, serif;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+img {
+  border: 2px solid black;
+  border-radius: 20px;
+  width: 33%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid black;
+}
+
+thead tr {
+  background-color: plum;
+}
+
+tbody {
+  text-align: center;
+}
+
+header {
+  text-align: center;
+  background-color: palevioletred;
+  font-size: 25px;
+}
+
+h2.boyle {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 100px;
+}
+
+.paragraph {
+  text-align: center;
+}
+
+body.art {
+  background-image: url('images/FishIm.png');
+  background-repeat: no-repeat;
+  background-size: 600px 600px;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.keywords {
+  font-family: "Courier New", monospace;
+  margin: 55px;
+  position: relative;
+  font-weight: bold;
+}
+
+#kOne {
+  font-size: 44px;
+  color: darkblue;
+  left: 30%;
+}
+
+#kTwo {
+  font-size: 48px;
+  color: darkcyan;
+  transform: rotate(-5deg);
+  left: 50%;
+}
+
+#kThree {
+  font-size: 40px;
+  color: darkgoldenrod;
+  left: 20%;
+}
+
+#kFour {
+  font-size: 52px;
+  color: darkred;
+  font-style: italic;
+  left: 40%;
+}
+
+#kFive {
+  font-size: 45px;
+  color: darkorchid;
+  text-decoration: underline;
+  left: 60%;
+  margin-bottom: 90px;
+}
+
+a:link {
+  color: darkblue;
+}
+
+a:visited {
+  color: green;
+}
+
+a:hover {
+  color: purple;
+}
+
+a:active {
+  color: red;
+}
+
+footer {
+  height: 50px;
+  background-color: grey;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body_wrapper {
+  box-sizing: border-box;
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.body_wrapper hr {
+  width: 100%;
+}
+
+nav {
+  background-color: darkgrey;
+  flex-direction: column;
+  align-items: center;
+}
+
+nav a.current {
+  color: yellow;
+}
+
+h3 {
+  text-indent: 1em;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: blue;
+  border-radius: 5px;
+} 
