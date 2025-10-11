@@ -93,7 +93,7 @@ body.art {
 }
 
 a:link {
-  color: darkblue;
+  color: lightblue;
 }
 
 a:visited {
@@ -130,14 +130,33 @@ footer {
 }
 
 nav {
-  background-color: darkgrey;
-  flex-direction: column;
-  align-items: center;
+  background-color: black;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 14px 16px;
+  transition: background-color 0.5s;
+}
+
+nav a:hover {
+  background-color: #555;
 }
 
 nav a.current {
-  color: yellow;
+  background-color: yellow;
+  color: black;
 }
+
 
 h3 {
   text-indent: 1em;
