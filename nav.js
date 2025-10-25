@@ -17,6 +17,7 @@ function setNav(current_path){
                     const childPath = splitAtRoot(child.href);
                     if (childPath === current_path) {
                         child.classList.add("current");
+                        console.log("Applied class to:", child.href);
                     }
                 }
             }
