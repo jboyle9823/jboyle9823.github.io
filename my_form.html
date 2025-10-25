@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="author" content="Jonathan Boyle">
+	<title>Superhero Quiz</title>
+	<link rel="stylesheet" href="my_style.css">
+	<script src="nav.js"> </script>
+    <script src="my_form.js"> </script>
+</head>
+<body class="quiz">
+	<div class = "body_wrapper">
+		<nav id="main-nav"></nav>
+		<script>
+			const current_path = location.pathname;
+			setNav(current_path);
+		</script>
+
+		<h1 class="quiz">Welcome to the Superhero Quiz</h1>
+
+        <form onsubmit="return validate(event)">
+            <fieldset>
+                <legend>Which Superhero are you?</legend>
+
+                <label for="name">Enter your name:</label>
+                <input type="text" id="name" name="name" required>
+                <br><br>
+
+                <label for="email">Enter your email:</label>
+                <input type="email" id="email" name="email" required>
+                <br><br>
+
+                <p>Which personality trait do you value the most?</p>
+                <label><input type="radio" name="personality" value="strength">Overwhelming strength and physical prowess</label><br>
+                <label><input type="radio" name="personality" value="intelligence">Intelligence and deductive skills</label><br>
+                <label><input type="radio" name="personality" value="compassion">Compassion and a strong moral compass</label><br><br>
+
+                <p>What trait do you value in a superpower?</p>
+                <label><input type="radio" name="power" value="strength">Strength</label><br>
+                <label><input type="radio" name="power" value="dexterity">Dexterity</label><br>
+                <label><input type="radio" name="power" value="perception">Perception</label><br>
+                <label><input type="radio" name="power" value="speed">Speed</label><br>
+                <label><input type="radio" name="power" value="nothing">I don't need a power to be super!</label><br><br>
+
+                <p>What would be the best asset to you?</p>
+                <label><input type="radio" name="asset" value="friends">Friends and family</label><br>
+                <label><input type="radio" name="asset" value="wealth">Wealth and connections</label><br>
+                <label><input type="radio" name="asset" value="cause">Belief in a cause</label><br>
+                <label><input type="radio" name="asset" value="personal">A strong personal drive</label><br><br>
+
+                <p>Your friend and a high-ranking official are both abducted, and you can only save one before time runs out! <strong>Who will you save?</strong></p>
+                <label><input type="radio" name="saving" value="friend">My friend</label><br>
+                <label><input type="radio" name="saving" value="official">The official</label><br>
+                <label><input type="radio" name="saving" value="both">I'll figure out a way to save both, somehow...</label><br><br>
+
+                <p>On a scale of 1–10, how likely are you to joke or stay upbeat during stressful moments?</p>
+                <input type="number" id="demeanor" name="demeanor" min="1" max="10" required>
+                <br><br>
+
+                <div style="text-align: center; padding-right: 0.5%;">
+                    <input class="submitButton" type="submit" value="Get my answer!">
+                </div>
+            </fieldset>
+        </form>
+	</div>
+	<footer>
+		This website is made for CS203 labs!
+	</footer>
+</body>
+</html>

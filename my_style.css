@@ -174,3 +174,49 @@ h3 {
   background: blue;
   border-radius: 5px;
 } 
+
+body.quiz {
+  background-image: url('images/superhero.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+h1.quiz {
+  text-align: center; 
+  color:white; 
+  font-size: 65px; 
+  background-color: brown; 
+  opacity: 0.85;
+  padding: 10px 20px;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+fieldset {
+  background-color:brown;
+  opacity: 0.9;
+  color: white;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+legend {
+  background-color: darkred;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 20px;
+}
+
+input.submitButton {
+  font-size: 45px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding-right: 0.5%;
+  background-color: yellow;
+  border-radius: 10px;
+}
+
+form p {
+  text-decoration: underline;
+  font-size: 20px;
+}

@@ -16,7 +16,7 @@ function setNav(current_path){
                 if (child instanceof HTMLAnchorElement) {
                     const childPath = splitAtRoot(child.href);
                     if (childPath === current_path) {
-                        child.classList.add("current_page");
+                        child.classList.add("current");
                     }
                 }
             }
