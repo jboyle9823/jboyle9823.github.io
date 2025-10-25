@@ -10,7 +10,10 @@
 <body>
 	<div class = "body_wrapper">
 		<nav id="main-nav"></nav>
-		<script>setNav()</script>
+		<script>
+			const current_path = location.pathname;
+			setNav(current_path)
+		</script>
 
 		<h1>Jonathan Boyle</h1>
 		<p>

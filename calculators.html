@@ -34,7 +34,11 @@
 </head>
 <body>
     <div class = "body_wrapper">
-
+        <nav id="main-nav"></nav>
+		<script>
+			const current_path = location.pathname;
+			setNav(current_path)
+		</script>
         <h1> Some calculators! </h1>
 
         <div class="calculator_div">
