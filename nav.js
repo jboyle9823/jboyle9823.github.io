@@ -14,10 +14,11 @@ function setNav(current_path){
             const nav = document.getElementById("main-nav");
             for (let child of nav.children) {
                 if (child instanceof HTMLAnchorElement) {
+                    console.log("Check One");
                     const childPath = splitAtRoot(child.href);
-                    if (childPath === current_path) {
+                    if (childPath == current_path) {
                         child.classList.add("current");
-                        console.log("Applied class to:", child.href);
+                        console.log("Check Two");
                     }
                 }
             }
