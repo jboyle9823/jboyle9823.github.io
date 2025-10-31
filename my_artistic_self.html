@@ -5,18 +5,15 @@
   <meta name="author" content="Jonathan Boyle">
   <title>Jonathan Boyle | My Art</title>
   <link rel="stylesheet" href="my_style.css">
+  <script src="nav.js"> </script>
 </head>
 <body class="art">
 	<div class = "body_wrapper">
-		<nav>
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="my_vacation.html">My Dream Vacation</a></li>
-				<li><a href="my_artistic_self.html" class="current">My Art</a></li>
-				<li><a href="marketplace.html">Marketplace</a></li>
-				<li><a href="calculators.html">Calculators</a></li>
-			</ul>
-		</nav>
+		<nav id="main-nav"></nav>
+		<script>
+			const current_path = location.pathname;
+			setNav(current_path);
+		</script>
 		<header>
     		<h1>
 				FISH, By Jonathan Boyle

@@ -5,18 +5,15 @@
 	<meta name="author" content="Jonathan Boyle">
 	<title>Jonathan Boyle | Pseudo-LinkedIn</title>
 	<link rel="stylesheet" href="my_style.css">
+	<script src="nav.js"> </script>
 </head>
 <body>
 	<div class = "body_wrapper">
-		<nav>
-			<ul>
-				<li><a href="index.html" class="current">Home</a></li>
-				<li><a href="my_vacation.html">My Dream Vacation</a></li>
-				<li><a href="my_artistic_self.html">My Art</a></li>
-				<li><a href="marketplace.html">Marketplace</a></li>
-				<li><a href="calculators.html">Calculators</a></li>
-			</ul>
-		</nav>
+		<nav id="main-nav"></nav>
+		<script>
+			const current_path = location.pathname;
+			setNav(current_path);
+		</script>
 
 		<h1>Jonathan Boyle</h1>
 		<p>
