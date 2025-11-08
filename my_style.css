@@ -220,3 +220,88 @@ form p {
   text-decoration: underline;
   font-size: 20px;
 }
+
+.slideshow {
+  max-width: 600px;
+  position: relative;
+  margin: 30px auto;
+}
+
+.slideshow_img img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+#prev, #next {
+  cursor: pointer;
+  position: absolute;
+  top: 45%;
+  padding: 12px;
+  font-weight: bold;
+  font-size: 60px;
+  color: palevioletred;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7);
+  user-select: none;
+}
+
+#prev { left: -10%; }
+#next { right: -10%; }
+
+#prev:hover, #next:hover {
+  color: purple;
+}
+
+@media (max-width: 600px) {
+  .slideshow {
+    max-width: 90%;
+  }
+  #prev, #next {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+body.todo {
+  background-image: url('images/linepaper.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+h1.todo {
+  text-align: center; 
+  color:white; 
+  font-size: 65px; 
+  background-color: blue; 
+  opacity: 0.85;
+  padding: 10px 20px;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+form.todo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input.todo {
+  font-size: 45px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding-right: 0.5%;
+  border-radius: 10px;
+  margin: 2%
+}
+
+button.todo {
+  font-size: 30px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding-right: 0.5%;
+  background-color: plum;
+  border-radius: 5px;
+}
