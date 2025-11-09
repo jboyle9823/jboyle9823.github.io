@@ -5,15 +5,13 @@
   <meta name="author" content="Jonathan Boyle">
   <title>Jonathan Boyle | My Art</title>
   <link rel="stylesheet" href="my_style.css">
-  <script src="nav.js"> </script>
 </head>
 <body class="art">
 	<div class = "body_wrapper">
-		<nav id="main-nav"></nav>
-		<script>
-			const current_path = location.pathname;
-			setNav(current_path);
-		</script>
+		<?php 
+            $current_page = 'art'; 
+            require 'nav.php'; 
+        ?>
 		<header>
     		<h1>
 				FISH, By Jonathan Boyle
@@ -32,8 +30,6 @@
 			The image on screen is the logo for the App Fishtagram, created by Jonathan Boyle &amp talented collaborators.
 		</p>
 	</div>
-	<footer>
-		This website is made for CS203 labs!
-	</footer>
+	<?php require 'footer.php'; ?>
 </body>
 </html>

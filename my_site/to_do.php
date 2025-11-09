@@ -6,7 +6,6 @@
 	<title>To-Do List</title>
 	<link rel="stylesheet" href="my_style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-	<script src="nav.js"></script>
 	<style>
 		li {
   			display: flex;
@@ -25,11 +24,10 @@
 </head>
 <body class="todo">
 	<div class="body_wrapper">
-		<nav id="main-nav"></nav>
-		<script>
-			const current_path = location.pathname;
-			setNav(current_path);
-		</script>
+		<?php 
+            $current_page = 'todo'; 
+            require 'nav.php'; 
+        ?>
 
 		<h1 class="todo">My To-Do List</h1>
 
@@ -42,9 +40,7 @@
     		<ul id="todo-list"></ul>
 		</div>
 	</div>
-	<footer>
-		This website is made for CS203 labs!
-	</footer>
+	<?php require 'footer.php'; ?>
 	<script src="to_do.js"></script>
 </body>
 </html>
