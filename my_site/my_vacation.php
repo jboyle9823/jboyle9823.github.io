@@ -5,21 +5,17 @@
   <meta name="author" content="Jonathan Boyle">
   <title>Jonathan Boyle | My Vacation</title>
   <link rel="stylesheet" href="my_style.css">
-  <script src="nav.js"> </script>
 </head>
 <body>
   <div class = "body_wrapper">
-    <nav id="main-nav"></nav>
-		<script>
-			const current_path = location.pathname;
-			setNav(current_path);
-		</script>
+    <?php 
+      $current_page = 'vacation'; 
+      require 'nav.php'; 
+    ?>
     <h1>My Dream Vacation</h1>
     <p>My dream vacation would be to go ski the Swiss Alps!</p>
     <img src="images/swiss-railway.jpg" alt="Swiss Mountain">
   </div>
- 	<footer>
-		This website is made for CS203 labs!
-	</footer>
+  <?php require 'footer.php'; ?>
 </body>
 </html>

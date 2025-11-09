@@ -1,7 +1,4 @@
 function validate(event) {
-    event.preventDefault();
-
-    // Get form values
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const demeanor = document.getElementById("demeanor").value;

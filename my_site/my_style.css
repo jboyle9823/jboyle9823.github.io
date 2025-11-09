@@ -138,6 +138,7 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
+  align-items: center;
 }
 
 nav a {
@@ -304,4 +305,49 @@ button.todo {
   padding-right: 0.5%;
   background-color: plum;
   border-radius: 5px;
+}
+
+.nav-logo {
+    height: auto;
+    width: auto;
+    object-fit: contain;
+}
+
+
+.result-box {
+  border: 3px solid #cc0000;
+  background-color: #ffe5e5;
+  color: #660000;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 650px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.hero-image {
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.categories {
+  margin-top: 30px;
+  background-color: #fff0f0;
+  border: 2px solid #ffcccc;
+  border-radius: 10px;
+  padding: 15px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.categories ul {
+  list-style: none;
+  padding: 0;
+}
+
+.categories li {
+  padding: 5px 0;
 }

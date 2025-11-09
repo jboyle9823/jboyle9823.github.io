@@ -8,7 +8,6 @@
 
     <script src="2-calculator.js"> </script>
     <script src="2-calculator_utils.js"> </script>
-    <script src="nav.js"> </script>
         
     <style> 
         .calculator_div{
@@ -35,11 +34,10 @@
 </head>
 <body>
     <div class = "body_wrapper">
-        <nav id="main-nav"></nav>
-		<script>
-			const current_path = location.pathname;
-			setNav(current_path);
-		</script>
+        <?php 
+            $current_page = 'calculators'; 
+            require 'nav.php'; 
+        ?>
         <h1> Some calculators! </h1>
 
         <div class="calculator_div">
@@ -110,8 +108,6 @@
                 
         </div>
     </div>
-    <footer>
-		This website is made for CS203 labs!
-	</footer>
+    <?php require 'footer.php'; ?>
 </body>
 </html>
