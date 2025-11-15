@@ -5,20 +5,16 @@
 	<meta name="author" content="Jonathan Boyle">
 	<title>Marketplace</title>
 	<link rel="stylesheet" href="my_style.css">
-	<script src="nav.js"> </script>
 </head>
 <body>
     <div class = "body_wrapper">
-		<nav id="main-nav"></nav>
-		<script>
-			const current_path = location.pathname;
-			setNav(current_path);
-		</script>
+		<?php 
+            $current_page = 'marketplace'; 
+            require 'nav.php'; 
+        ?>
         <h1>This is my Marketplace!</h1>
         <script src="1-marketplace.js"></script>
     </div>
-    <footer>
-		This website is made for CS203 labs!
-	</footer>
+	<?php require 'footer.php'; ?>
 </body>
 </html>

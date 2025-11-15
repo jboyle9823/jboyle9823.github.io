@@ -5,20 +5,18 @@
 	<meta name="author" content="Jonathan Boyle">
 	<title>Superhero Quiz</title>
 	<link rel="stylesheet" href="my_style.css">
-	<script src="nav.js"> </script>
     <script src="my_form.js"> </script>
 </head>
 <body class="quiz">
 	<div class = "body_wrapper">
-		<nav id="main-nav"></nav>
-		<script>
-			const current_path = location.pathname;
-			setNav(current_path);
-		</script>
+        <?php 
+            $current_page = 'form'; 
+            require 'nav.php'; 
+        ?>
 
 		<h1 class="quiz">Welcome to the Superhero Quiz</h1>
 
-        <form onsubmit="return validate(event)">
+        <form action="quiz_verification.php" method="get">
             <fieldset>
                 <legend>Which Superhero are you?</legend>
 
@@ -63,8 +61,6 @@
             </fieldset>
         </form>
 	</div>
-	<footer>
-		This website is made for CS203 labs!
-	</footer>
+    <?php require 'footer.php'; ?>
 </body>
 </html>
