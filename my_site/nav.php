@@ -11,6 +11,6 @@
         <li><a href="calculators.php" class="<?= ($current_page === 'calculators') ? 'current' : '' ?>">Calculators</a></li>
         <li><a href="my_form.php" class="<?= ($current_page === 'form') ? 'current' : '' ?>">Superhero Quiz</a></li>
         <li><a href="login.php" class="<?= ($current_page === 'login') ? 'current' : '' ?>">To-Do List</a></li>
-        <li><a href="blog.php" class="<?= ($current_page === 'blog') ? 'current' : '' ?>">To-Do List</a></li>
+        <li><a href="blog.php" class="<?= ($current_page === 'blog') ? 'current' : '' ?>">My Blog</a></li>
     </ul>
 </nav>
