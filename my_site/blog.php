@@ -79,6 +79,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
     <title>My Blog</title>
     <link rel="stylesheet" href="my_style.css">
     <script src="my_form.js"></script>
+    <style>
+        img:hover {
+            /* Putting the wiggle animation on the image when hovered, lasts for 1 second, eases in and out. */
+            animation: happyWiggle 1s ease-in-out;
+
+            /* Animation is on loop. */
+            animation-iteration-count: infinite;
+        }
+
+        /* This keyframe animation rotates the image at each percentage checkpoint of the animation. */
+        @keyframes happyWiggle {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(3deg); }
+            40% { transform: rotate(-3deg); }
+            60% { transform: rotate(2deg); }
+            80% { transform: rotate(-2deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* This keyframe animation changes the color of the background at each percentage checkpoint of the animation. */
+        @keyframes introGlow {
+            0% {
+                background-color: darkblue;
+            }
+            50% {
+                background-color: blue;
+            }
+            100% {
+                background-color: skyblue;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="body_wrapper">
@@ -134,8 +166,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
             The overhead hero section, with classes for styling in my_style.css.
             The section has a header and a paragraph.
         -->
-        <section class="hero">
+        <section class="hero" style="animation: introGlow 10s ease-in-out;">
             <div>
+                 <img src="images/blog.jpg" alt="Blog"> 
                 <h1>Welcome to My Tech & Life Blog</h1>
                 <p>
                     This blog explores technology, creativity, and the stories shaping our digital world.
@@ -181,7 +214,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
                         <?php if ($logged_in): ?>
                             <button onclick="deletePost('<?= $id ?>')">Delete</button>
                         <?php endif; ?>
-
                     </article>
                     
                     <!-- HTML for the comment section. -->
