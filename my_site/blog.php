@@ -1,0 +1,315 @@
+<?php 
+session_start(); 
+
+$message = ""; 
+$error = ""; 
+
+$correct_hash = hash("sha256", "CS203");
+
+//For this Login, I took heavy inspiration from the To-Do List Login.
+
+//Handling logout.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'logout') {
+    session_unset();
+    session_destroy();
+    session_start();
+    $message = "Logged out successfully.";
+}
+
+//Handling login.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+
+    $password = $_POST['password'] ?? "";
+
+    if ($password === "") {
+        $error = "Please enter the password.";
+    } else {
+        $hashed_input = hash("sha256", $password);
+
+        if ($hashed_input === $correct_hash) {
+            $_SESSION['logged_in'] = true;
+            $message = "Login successful!";
+        } else {
+            $error = "Incorrect password.";
+        }
+    }
+}
+
+//PHP section for the comment section.
+$commentsFile = "comments.json";
+$commentsData = json_decode(file_get_contents($commentsFile), true);
+
+//Initializing the array if the file is empty.
+if (!is_array($commentsData)) {
+    $commentsData = [];
+}
+
+//Logic for new comment submissions.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
+    $postID = $_POST['post_id'];
+    $name = trim($_POST['name']);
+    $commentText = trim($_POST['comment']);
+
+    if ($commentText !== "") {
+        $safeName = htmlspecialchars($name);
+        $safeComment = htmlspecialchars($commentText);
+
+        if (!isset($commentsData[$postID])) {
+            $commentsData[$postID] = [];
+        }
+
+        //Adding the comment entry.
+        $commentsData[$postID][] = [
+            "name" => $safeName !== "" ? $safeName : "Anonymous",
+            "comment" => $safeComment,
+            "date" => date("Y-m-d H:i")
+        ];
+
+        //Saving it back to the JSON.
+        file_put_contents($commentsFile, json_encode($commentsData, JSON_PRETTY_PRINT));
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Jonathan Boyle">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="my_style.css">
+    <script src="my_form.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        img:hover {
+            /* Putting the wiggle animation on the image when hovered, lasts for 1 second, eases in and out. */
+            animation: happyWiggle 1s ease-in-out;
+
+            /* Animation is on loop. */
+            animation-iteration-count: infinite;
+        }
+
+        /* This keyframe animation rotates the image at each percentage checkpoint of the animation. */
+        @keyframes happyWiggle {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(3deg); }
+            40% { transform: rotate(-3deg); }
+            60% { transform: rotate(2deg); }
+            80% { transform: rotate(-2deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* This keyframe animation changes the color of the background at each percentage checkpoint of the animation. */
+        @keyframes introGlow {
+            0% {
+                background-color: darkblue;
+            }
+            50% {
+                background-color: blue;
+            }
+            100% {
+                background-color: skyblue;
+            }
+        }
+    </style>
+</head>
+<body style="background-image: url('images/colors.jpg');">
+    <div class="body_wrapper">
+
+    <?php
+    $current_page = 'blog';
+    require 'nav.php';
+
+    //Loading the blog posts from the JSON file.
+    $jsonData = file_get_contents("blog_posts.json");
+    $posts = json_decode($jsonData, true);
+
+    $logged_in = !empty($_SESSION['logged_in']);
+    ?>
+
+    <div class="login-bar mb-4 flex gap-3">
+        <?php if (empty($_SESSION['logged_in'])): ?>
+            <!-- Login form with password box. -->
+            <form method="POST" class="flex gap-2">
+                <input type="password" name="password" placeholder="Password" required class="border p-2 rounded">
+                <button type="submit" name="login" class="bg-blue-600 text-white px-4 py-2 rounded">Login</button>
+            </form>
+        <?php else: ?>
+            <!-- Logout button. -->
+            <form method="POST">
+                <button type="submit" name="action" value="logout" class="bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+            </form>
+        <?php endif; ?>
+    </div>
+
+    <!-- New post button that calls add_post.php. -->
+    <?php if (!empty($_SESSION['logged_in'])): ?>
+        <div>
+            <a href="add_post.php" class="bg-green-600 text-white px-4 py-2 m-2 rounded">
+                Add New Post
+            </a>
+        </div>
+    <?php endif; ?>
+
+    <!-- Error and success messages. -->
+    <?php if ($error): ?>
+        <p class="text-red-600"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+
+    <?php if ($message): ?>
+        <p class="text-green-700"><?= htmlspecialchars($message) ?></p>
+    <?php endif; ?>
+
+    <!-- The overhead hero section, with classes for styling in my_style.css. The section has a header and a paragraph. -->
+    <section class="hero" style="animation: introGlow 10s ease-in-out;">
+        <div>
+            <img src="images/blog.jpg" alt="Blog" style="display: block; margin-left: auto; margin-right: auto;">
+            <h1 class="text-4xl font-bold mt-4">Welcome to My Tech & Life Blog</h1>
+            <p class="mt-2 text-gray-700">
+                This blog explores technology, creativity, and the stories shaping our digital world.
+                All posts below are loaded dynamically from a JSON file using PHP.
+            </p>
+        </div>
+    </section>
+
+    <!-- Div for page layout, adding flex. -->
+    <div class="blog-layout flex gap-6">
+
+        <!-- The aside section with the list element links to posts. -->
+        <aside class="blog-aside w-1/4 bg-gray-50 p-4 rounded shadow">
+            <h3 class="text-xl font-semibold mb-4">All Posts</h3>
+
+            <!-- Search bar for searching posts. -->
+            <input type="text" id="searchInput" placeholder="Search posts..." class="w-full mb-4 p-2 border rounded">
+
+            <ul class="space-y-2">
+                <?php foreach ($posts as $id => $post): ?>
+                    <li>
+                        <a href="#<?= $id ?>" class="text-blue-600 hover:underline"><?= htmlspecialchars($post["title"]) ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </aside>
+
+        <!-- Adding the style for the grid that's in my_style.css. Changed to a main for the second part. -->
+        <main class="blog-grid">
+
+            <!-- Posting each blog post as an article with PHP. -->
+            <?php foreach ($posts as $id => $post): ?>
+
+                <article id="<?= $id ?>" class="blog-card">
+                    <h2><?= htmlspecialchars($post["title"]) ?></h2>
+                    <p><em><?= htmlspecialchars($post["date"]) ?></em></p>
+
+                    <!-- only the first 30 words are displayed. -->
+                    <?php
+                    $fullText = implode(" ", $post["paragraphs"]);
+                    $words = explode(" ", $fullText);
+                    $preview = implode(" ", array_slice($words, 0, 30)) . " ...";
+                    ?>
+
+                    <p class="mt-3"><?= htmlspecialchars($preview) ?></p>
+
+                    <a href="show_post.php?id=<?= urlencode($id) ?>" class="text-blue-600 underline hover:text-blue-800">
+                        Read more
+                    </a>
+
+                    <!-- Delete button that's visible when logged in. -->
+                    <?php if ($logged_in): ?>
+                        <button onclick="deletePost('<?= $id ?>')" class="ml-3 bg-red-600 text-white px-3 py-1 rounded">Delete</button>
+                    <?php endif; ?>
+                </article>
+
+                <!-- HTML for the comment section. -->
+                <div class="bg-gray-50 p-5 rounded shadow">
+                    <h3 class="text-lg font-semibold mb-3">Comments</h3>
+
+                    <!-- Showing existing comments. -->
+                    <div class="space-y-3">
+                        <?php if (!empty($commentsData[$id])): ?>
+                            <?php foreach ($commentsData[$id] as $c): ?>
+                                <div class="p-3 bg-white rounded shadow">
+                                    <p>
+                                        <strong><?= $c['name'] ?></strong> - <?= $c['date'] ?>
+                                    </p>
+                                    <p><?= $c['comment'] ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No one has commented yet.</p>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- New comment form. -->
+                    <form method="POST" class="space-y-3 mt-3">
+                        <input type="hidden" name="post_id" value="<?= $id ?>">
+                        <input type="text" name="name" placeholder="Your name (optional)" class="border p-2 w-full rounded">
+                        <textarea name="comment" placeholder="Write your comment..." required class="border p-2 w-full rounded"></textarea>
+                        <button type="submit" name="add_comment" class="bg-blue-600 text-white px-4 py-2 rounded">
+                            Post Comment
+                        </button>
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        </main>
+    </div>
+</div>
+
+
+    <?php require 'footer.php'; ?>
+
+    <!-- JS for deleting the posts. -->
+    <script>
+    function deletePost(id) {
+        if (!confirm("Are you sure?")) {
+            return;
+        }
+
+        //Removes the element from the page.
+        const element = document.getElementById(id);
+        if (element) {
+            element.remove();
+        }
+
+        //Amd calls the php code for JSON deletion.
+        fetch("delete_post.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: "id=" + encodeURIComponent(id)
+        })
+        .then(r => r.text())
+        .then(console.log);
+    }
+    </script>
+
+    <!-- JS for searching for posts. -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const input = document.getElementById("searchInput");
+            const posts = document.querySelectorAll(".blog-card");
+
+            input.addEventListener("input", function () {
+                const keyword = this.value.toLowerCase();
+
+                posts.forEach(post => {
+                    const title = post.querySelector("h2").textContent.toLowerCase();
+                    const paragraphs = post.querySelectorAll("p");
+
+                    //Either check for a title match.
+                    let match = title.includes(keyword);
+
+                    //Or paragraph match.
+                    paragraphs.forEach(p => {
+                        if (p.textContent.toLowerCase().includes(keyword)) {
+                            match = true;
+                        }
+                    });
+
+                    //Show result, hide other posts.
+                    post.style.display = match ? "" : "none";
+                });
+            });
+        });
+    </script>
+</body>
+</html>
