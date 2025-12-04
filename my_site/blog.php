@@ -150,6 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
             <!-- The aside section with the list element links to posts. -->
             <aside class="blog-aside">
                 <h3>All Posts</h3>
+                <!-- Search bar for searching posts. -->
+                <input type="text" id="searchInput" placeholder="Search posts...">
                 <ul>
                     <?php foreach ($posts as $id => $post): ?>
                         <li>
@@ -246,5 +248,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
     }
     </script>
 
+    <!-- JS for searching for posts. -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const input = document.getElementById("searchInput");
+            const posts = document.querySelectorAll(".blog-card");
+
+            input.addEventListener("input", function () {
+                const keyword = this.value.toLowerCase();
+
+                posts.forEach(post => {
+                    const title = post.querySelector("h2").textContent.toLowerCase();
+                    const paragraphs = post.querySelectorAll("p");
+
+                    //Either check for a title match.
+                    let match = title.includes(keyword);
+
+                    //Or paragraph match.
+                    paragraphs.forEach(p => {
+                        if (p.textContent.toLowerCase().includes(keyword)) {
+                            match = true;
+                        }
+                    });
+
+                    //Show result, hide other posts.
+                    post.style.display = match ? "" : "none";
+                });
+            });
+        });
+    </script>
 </body>
 </html>
