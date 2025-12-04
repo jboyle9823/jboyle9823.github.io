@@ -1,0 +1,41 @@
+{
+    "blog1": {
+        "date": "2020-01-20",
+        "title": "First day on my trip!",
+        "paragraphs": [
+            "Today was my first day travelling alone! It was nice.",
+            "I discovered many impressive things!"
+        ]
+    },
+    "blog2": {
+        "date": "2020-01-22",
+        "title": "Discovering my AirBnB!",
+        "paragraphs": [
+            "I finally got to lay down a bit today!"
+        ]
+    },
+    "blog3": {
+        "date": "2020-01-25",
+        "title": "Exploring the city center",
+        "paragraphs": [
+            "The city center was full of life and energy.",
+            "Street performers, food vendors, and artists made it unforgettable."
+        ]
+    },
+    "blog4": {
+        "date": "2020-01-25",
+        "title": "Exploring the city center",
+        "paragraphs": [
+            "The city center was full of life and energy.",
+            "Street performers, food vendors, and artists made it unforgettable."
+        ]
+    },
+    "blog5": {
+        "date": "2020-01-25",
+        "title": "Exploring the city center",
+        "paragraphs": [
+            "The city center was full of life and energy.",
+            "Street performers, food vendors, and artists made it unforgettable."
+        ]
+    }
+}
