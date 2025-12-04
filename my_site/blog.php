@@ -34,6 +34,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
     }
 }
+
+//PHP section for the comment section.
+$commentsFile = "comments.json";
+$commentsData = json_decode(file_get_contents($commentsFile), true);
+
+//Initializing the array if the file is empty.
+if (!is_array($commentsData)) {
+    $commentsData = [];
+}
+
+//Logic for new comment submissions.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
+    $postID = $_POST['post_id'];
+    $name = trim($_POST['name']);
+    $commentText = trim($_POST['comment']);
+
+    if ($commentText !== "") {
+        $safeName = htmlspecialchars($name);
+        $safeComment = htmlspecialchars($commentText);
+
+        if (!isset($commentsData[$postID])) {
+            $commentsData[$postID] = [];
+        }
+
+        //Adding the comment entry.
+        $commentsData[$postID][] = [
+            "name" => $safeName !== "" ? $safeName : "Anonymous",
+            "comment" => $safeComment,
+            "date" => date("Y-m-d H:i")
+        ];
+
+        //Saving it back to the JSON.
+        file_put_contents($commentsFile, json_encode($commentsData, JSON_PRETTY_PRINT));
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -146,6 +181,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         <?php endif; ?>
 
                     </article>
+                    
+                    <!-- HTML for the comment section. -->
+                    <div>
+                        <h3>Comments</h3>
+
+                        <!-- Showing existing comments. -->
+                        <div>
+                            <?php if (!empty($commentsData[$id])): ?>
+                                <?php foreach ($commentsData[$id] as $c): ?>
+                                    <div>
+                                        <p>
+                                            <strong><?= $c['name'] ?></strong> - <?= $c['date'] ?>
+                                        </p>
+                                        <p><?= $c['comment'] ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>No one has commented yet.</p>
+                            <?php endif; ?>
+                        </div>
+                
+                        <!-- New comment form. -->
+                        <form method="POST" class="space-y-3">
+                            <input type="hidden" name="post_id" value="<?= $id ?>">
+
+                            <input type="text" name="name" placeholder="Your name (optional)">
+
+                            <textarea name="comment" placeholder="Write your comment..." required></textarea>
+
+                            <button type="submit" name="add_comment">
+                                Post Comment
+                            </button>
+                        </form>
+                    </div>
                 <?php endforeach; ?>
             </main>
         </div>
