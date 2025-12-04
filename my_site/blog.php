@@ -76,6 +76,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             <?php endif; ?>
         </div>
 
+        <!-- New post button that calls add_post.php. -->
+        <?php if (!empty($_SESSION['logged_in'])): ?>
+            <div style="margin: 20px 0;">
+                <a href="add_post.php">
+                    Add New Post
+                </a>
+            </div>
+        <?php endif; ?>
+
+
         <!-- Error and success messages. -->
         <?php if ($error): ?>
             <p><?= htmlspecialchars($error) ?></p>
