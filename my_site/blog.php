@@ -200,15 +200,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
                 <!-- Posting each blog post as an article with PHP. -->
                 <?php foreach ($posts as $id => $post): ?>
                     <article id="<?= $id ?>" class="blog-card">
-
                         <h2><?= htmlspecialchars($post["title"]) ?></h2>
                         <p><em><?= htmlspecialchars($post["date"]) ?></em></p>
 
-                        <?php 
-                            foreach ($post["paragraphs"] as $text) {
-                                echo "<p>" . htmlspecialchars($text) . "</p>";
-                            }
+                        <!-- only the first 30 words are displayed. -->
+                        <?php
+                            $fullText = implode(" ", $post["paragraphs"]);
+                            $words = explode(" ", $fullText);
+                            $preview = implode(" ", array_slice($words, 0, 30)) . " ...";
                         ?>
+
+                        <p><?= htmlspecialchars($preview) ?></p>
+
+                        <a href="show_post.php?id=<?= urlencode($id) ?>" class="text-blue-600 underline hover:text-blue-800">
+                            Read more
+                        </a>
 
                         <!-- Delete button that's visible when logged in. -->
                         <?php if ($logged_in): ?>
