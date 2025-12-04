@@ -1,3 +1,41 @@
+<style>
+    /* Added new styles to the nav menu elements to add flex layout. */
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        display: flex;             
+        align-items: center;        
+        justify-content: space-between;
+        flex-wrap: wrap;           
+        gap: 10px;                 
+    }
+
+    nav li {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-logo {
+        height: 50px;
+        width: auto;
+    }
+
+    /* Align to column if window is below 700 pixels. */
+    @media (max-width: 700px) {
+        nav ul {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        nav a {
+            font-size: 1.1rem;
+            width: 100%;
+        }
+    }
+</style>
+
 <nav>
     <ul>
         <li>
