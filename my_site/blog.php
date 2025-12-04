@@ -1,12 +1,13 @@
-<?php
-session_start();
+<?php 
+session_start(); 
 
-$message = "";
-$error = "";
+$message = ""; 
+$error = ""; 
 
 $correct_hash = hash("sha256", "CS203");
 
 //For this Login, I took heavy inspiration from the To-Do List Login.
+
 //Handling logout.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'logout') {
     session_unset();
@@ -54,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             //Loading the blog posts from the JSON file.
             $jsonData = file_get_contents("blog_posts.json");
             $posts = json_decode($jsonData, true); 
+
+            $logged_in = !empty($_SESSION['logged_in']);
         ?>
 
         <div class="login-bar">
@@ -127,6 +130,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                             }
                         ?>
 
+                        <!-- Delete button that's visible when logged in. -->
+                        <?php if ($logged_in): ?>
+                            <button onclick="deletePost('<?= $id ?>')">Delete</button>
+                        <?php endif; ?>
+
                     </article>
                 <?php endforeach; ?>
             </main>
@@ -134,5 +142,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     </div>
 
     <?php require 'footer.php'; ?>
+
+    <!-- JS for deleting the posts. -->
+    <script>
+    function deletePost(id) {
+        if (!confirm("Are you sure?")) {
+            return;
+        }
+
+        //Removes the element from the page.
+        const element = document.getElementById(id);
+        if (element) {
+            element.remove();
+        }
+
+        //Amd calls the php code for JSON deletion.
+        fetch("delete_post.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: "id=" + encodeURIComponent(id)
+        })
+        .then(r => r.text())
+        .then(console.log);
+    }
+    </script>
+
 </body>
 </html>
