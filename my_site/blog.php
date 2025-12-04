@@ -1,3 +1,40 @@
+<?php
+session_start();
+
+$message = "";
+$error = "";
+
+$correct_hash = hash("sha256", "CS203");
+
+//For this Login, I took heavy inspiration from the To-Do List Login.
+//Handling logout.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'logout') {
+    session_unset();
+    session_destroy();
+    session_start();
+    $message = "Logged out successfully.";
+}
+
+//Handling login.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+
+    $password = $_POST['password'] ?? "";
+
+    if ($password === "") {
+        $error = "Please enter the password.";
+    } else {
+        $hashed_input = hash("sha256", $password);
+
+        if ($hashed_input === $correct_hash) {
+            $_SESSION['logged_in'] = true;
+            $message = "Login successful!";
+        } else {
+            $error = "Incorrect password.";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +55,32 @@
             $jsonData = file_get_contents("blog_posts.json");
             $posts = json_decode($jsonData, true); 
         ?>
+
+        <div class="login-bar">
+
+            <?php if (empty($_SESSION['logged_in'])): ?>
+                <!-- Login form with password box. -->
+                <form method="POST">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit" name="login">Login</button>
+                </form>
+
+            <?php else: ?>
+                <!-- Logout button. -->
+                <form method="POST">
+                    <button type="submit" name="action" value="logout">Logout</button>
+                </form>
+            <?php endif; ?>
+        </div>
+
+        <!-- Error and success messages. -->
+        <?php if ($error): ?>
+            <p><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+
+        <?php if ($message): ?>
+            <p><?= htmlspecialchars($message) ?></p>
+        <?php endif; ?>
 
         <!-- 
             The overhead hero section, with classes for styling in my_style.css.
