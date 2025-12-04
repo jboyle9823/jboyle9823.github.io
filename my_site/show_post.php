@@ -23,7 +23,7 @@
     <title><?= htmlspecialchars($post["title"]) ?></title>
     <link rel="stylesheet" href="my_style.css">
 </head>
-<body>
+<body style="background-image: url('images/colors.jpg');">
     <div class="body_wrapper">
 
         <?php 

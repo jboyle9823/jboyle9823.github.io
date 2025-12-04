@@ -13,7 +13,7 @@ if (empty($_SESSION['logged_in'])) {
     <title>Add New Blog Post</title>
     <link rel="stylesheet" href="my_style.css">
 </head>
-<body>
+<body style="background-image: url('images/colors.jpg');">
 
 <!-- New site for the post creation. -->
 <div class="body_wrapper">

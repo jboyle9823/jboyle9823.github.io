@@ -79,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
     <title>My Blog</title>
     <link rel="stylesheet" href="my_style.css">
     <script src="my_form.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         img:hover {
             /* Putting the wiggle animation on the image when hovered, lasts for 1 second, eases in and out. */
@@ -112,153 +113,148 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
         }
     </style>
 </head>
-<body>
+<body style="background-image: url('images/colors.jpg');">
     <div class="body_wrapper">
 
-        <?php 
-            $current_page = 'blog'; 
-            require 'nav.php'; 
+    <?php
+    $current_page = 'blog';
+    require 'nav.php';
 
-            //Loading the blog posts from the JSON file.
-            $jsonData = file_get_contents("blog_posts.json");
-            $posts = json_decode($jsonData, true); 
+    //Loading the blog posts from the JSON file.
+    $jsonData = file_get_contents("blog_posts.json");
+    $posts = json_decode($jsonData, true);
 
-            $logged_in = !empty($_SESSION['logged_in']);
-        ?>
+    $logged_in = !empty($_SESSION['logged_in']);
+    ?>
 
-        <div class="login-bar">
-
-            <?php if (empty($_SESSION['logged_in'])): ?>
-                <!-- Login form with password box. -->
-                <form method="POST">
-                    <input type="password" name="password" placeholder="Password" required>
-                    <button type="submit" name="login">Login</button>
-                </form>
-
-            <?php else: ?>
-                <!-- Logout button. -->
-                <form method="POST">
-                    <button type="submit" name="action" value="logout">Logout</button>
-                </form>
-            <?php endif; ?>
-        </div>
-
-        <!-- New post button that calls add_post.php. -->
-        <?php if (!empty($_SESSION['logged_in'])): ?>
-            <div style="margin: 20px 0;">
-                <a href="add_post.php">
-                    Add New Post
-                </a>
-            </div>
+    <div class="login-bar mb-4 flex gap-3">
+        <?php if (empty($_SESSION['logged_in'])): ?>
+            <!-- Login form with password box. -->
+            <form method="POST" class="flex gap-2">
+                <input type="password" name="password" placeholder="Password" required class="border p-2 rounded">
+                <button type="submit" name="login" class="bg-blue-600 text-white px-4 py-2 rounded">Login</button>
+            </form>
+        <?php else: ?>
+            <!-- Logout button. -->
+            <form method="POST">
+                <button type="submit" name="action" value="logout" class="bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+            </form>
         <?php endif; ?>
-
-
-        <!-- Error and success messages. -->
-        <?php if ($error): ?>
-            <p><?= htmlspecialchars($error) ?></p>
-        <?php endif; ?>
-
-        <?php if ($message): ?>
-            <p><?= htmlspecialchars($message) ?></p>
-        <?php endif; ?>
-
-        <!-- 
-            The overhead hero section, with classes for styling in my_style.css.
-            The section has a header and a paragraph.
-        -->
-        <section class="hero" style="animation: introGlow 10s ease-in-out;">
-            <div>
-                 <img src="images/blog.jpg" alt="Blog"> 
-                <h1>Welcome to My Tech & Life Blog</h1>
-                <p>
-                    This blog explores technology, creativity, and the stories shaping our digital world.
-                    All posts below are loaded dynamically from a JSON file using PHP.
-                </p>
-            </div>
-        </section>
-
-        <!-- Div for page layout, adding flex. -->
-        <div class="blog-layout">
-
-            <!-- The aside section with the list element links to posts. -->
-            <aside class="blog-aside">
-                <h3>All Posts</h3>
-                <!-- Search bar for searching posts. -->
-                <input type="text" id="searchInput" placeholder="Search posts...">
-                <ul>
-                    <?php foreach ($posts as $id => $post): ?>
-                        <li>
-                            <a href="#<?= $id ?>"><?= htmlspecialchars($post["title"]) ?></a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </aside>
-
-            <!-- Adding the style for the grid that's in my_style.css. Changed to a main for the second part. -->
-            <main class="blog-grid">
-
-                <!-- Posting each blog post as an article with PHP. -->
-                <?php foreach ($posts as $id => $post): ?>
-                    <article id="<?= $id ?>" class="blog-card">
-                        <h2><?= htmlspecialchars($post["title"]) ?></h2>
-                        <p><em><?= htmlspecialchars($post["date"]) ?></em></p>
-
-                        <!-- only the first 30 words are displayed. -->
-                        <?php
-                            $fullText = implode(" ", $post["paragraphs"]);
-                            $words = explode(" ", $fullText);
-                            $preview = implode(" ", array_slice($words, 0, 30)) . " ...";
-                        ?>
-
-                        <p><?= htmlspecialchars($preview) ?></p>
-
-                        <a href="show_post.php?id=<?= urlencode($id) ?>" class="text-blue-600 underline hover:text-blue-800">
-                            Read more
-                        </a>
-
-                        <!-- Delete button that's visible when logged in. -->
-                        <?php if ($logged_in): ?>
-                            <button onclick="deletePost('<?= $id ?>')">Delete</button>
-                        <?php endif; ?>
-                    </article>
-                    
-                    <!-- HTML for the comment section. -->
-                    <div>
-                        <h3>Comments</h3>
-
-                        <!-- Showing existing comments. -->
-                        <div>
-                            <?php if (!empty($commentsData[$id])): ?>
-                                <?php foreach ($commentsData[$id] as $c): ?>
-                                    <div>
-                                        <p>
-                                            <strong><?= $c['name'] ?></strong> - <?= $c['date'] ?>
-                                        </p>
-                                        <p><?= $c['comment'] ?></p>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p>No one has commented yet.</p>
-                            <?php endif; ?>
-                        </div>
-                
-                        <!-- New comment form. -->
-                        <form method="POST" class="space-y-3">
-                            <input type="hidden" name="post_id" value="<?= $id ?>">
-
-                            <input type="text" name="name" placeholder="Your name (optional)">
-
-                            <textarea name="comment" placeholder="Write your comment..." required></textarea>
-
-                            <button type="submit" name="add_comment">
-                                Post Comment
-                            </button>
-                        </form>
-                    </div>
-                <?php endforeach; ?>
-            </main>
-        </div>
     </div>
+
+    <!-- New post button that calls add_post.php. -->
+    <?php if (!empty($_SESSION['logged_in'])): ?>
+        <div>
+            <a href="add_post.php" class="bg-green-600 text-white px-4 py-2 m-2 rounded">
+                Add New Post
+            </a>
+        </div>
+    <?php endif; ?>
+
+    <!-- Error and success messages. -->
+    <?php if ($error): ?>
+        <p class="text-red-600"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+
+    <?php if ($message): ?>
+        <p class="text-green-700"><?= htmlspecialchars($message) ?></p>
+    <?php endif; ?>
+
+    <!-- The overhead hero section, with classes for styling in my_style.css. The section has a header and a paragraph. -->
+    <section class="hero" style="animation: introGlow 10s ease-in-out;">
+        <div>
+            <img src="images/blog.jpg" alt="Blog" style="display: block; margin-left: auto; margin-right: auto;">
+            <h1 class="text-4xl font-bold mt-4">Welcome to My Tech & Life Blog</h1>
+            <p class="mt-2 text-gray-700">
+                This blog explores technology, creativity, and the stories shaping our digital world.
+                All posts below are loaded dynamically from a JSON file using PHP.
+            </p>
+        </div>
+    </section>
+
+    <!-- Div for page layout, adding flex. -->
+    <div class="blog-layout flex gap-6">
+
+        <!-- The aside section with the list element links to posts. -->
+        <aside class="blog-aside w-1/4 bg-gray-50 p-4 rounded shadow">
+            <h3 class="text-xl font-semibold mb-4">All Posts</h3>
+
+            <!-- Search bar for searching posts. -->
+            <input type="text" id="searchInput" placeholder="Search posts..." class="w-full mb-4 p-2 border rounded">
+
+            <ul class="space-y-2">
+                <?php foreach ($posts as $id => $post): ?>
+                    <li>
+                        <a href="#<?= $id ?>" class="text-blue-600 hover:underline"><?= htmlspecialchars($post["title"]) ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </aside>
+
+        <!-- Adding the style for the grid that's in my_style.css. Changed to a main for the second part. -->
+        <main class="blog-grid">
+
+            <!-- Posting each blog post as an article with PHP. -->
+            <?php foreach ($posts as $id => $post): ?>
+
+                <article id="<?= $id ?>" class="blog-card">
+                    <h2><?= htmlspecialchars($post["title"]) ?></h2>
+                    <p><em><?= htmlspecialchars($post["date"]) ?></em></p>
+
+                    <!-- only the first 30 words are displayed. -->
+                    <?php
+                    $fullText = implode(" ", $post["paragraphs"]);
+                    $words = explode(" ", $fullText);
+                    $preview = implode(" ", array_slice($words, 0, 30)) . " ...";
+                    ?>
+
+                    <p class="mt-3"><?= htmlspecialchars($preview) ?></p>
+
+                    <a href="show_post.php?id=<?= urlencode($id) ?>" class="text-blue-600 underline hover:text-blue-800">
+                        Read more
+                    </a>
+
+                    <!-- Delete button that's visible when logged in. -->
+                    <?php if ($logged_in): ?>
+                        <button onclick="deletePost('<?= $id ?>')" class="ml-3 bg-red-600 text-white px-3 py-1 rounded">Delete</button>
+                    <?php endif; ?>
+                </article>
+
+                <!-- HTML for the comment section. -->
+                <div class="bg-gray-50 p-5 rounded shadow">
+                    <h3 class="text-lg font-semibold mb-3">Comments</h3>
+
+                    <!-- Showing existing comments. -->
+                    <div class="space-y-3">
+                        <?php if (!empty($commentsData[$id])): ?>
+                            <?php foreach ($commentsData[$id] as $c): ?>
+                                <div class="p-3 bg-white rounded shadow">
+                                    <p>
+                                        <strong><?= $c['name'] ?></strong> - <?= $c['date'] ?>
+                                    </p>
+                                    <p><?= $c['comment'] ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No one has commented yet.</p>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- New comment form. -->
+                    <form method="POST" class="space-y-3 mt-3">
+                        <input type="hidden" name="post_id" value="<?= $id ?>">
+                        <input type="text" name="name" placeholder="Your name (optional)" class="border p-2 w-full rounded">
+                        <textarea name="comment" placeholder="Write your comment..." required class="border p-2 w-full rounded"></textarea>
+                        <button type="submit" name="add_comment" class="bg-blue-600 text-white px-4 py-2 rounded">
+                            Post Comment
+                        </button>
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        </main>
+    </div>
+</div>
+
 
     <?php require 'footer.php'; ?>
 
